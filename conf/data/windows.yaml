@@ -3,8 +3,8 @@ raw_dir: data/raw/windows
 sequences_dir: data/sequences/windows
 window_size: 9
 
-# Windows Loghub CSV — already structured, no header-strip regex needed
-log_format: "<LineId>,<Date>,<Time>,<Level>,<Component>,<EventId>,<EventTemplate>,<Content>"
+# Windows CBS log: "2016-09-28 04:30:30, Info                  CBS    message..."
+log_format: "<Datetime>, <Level> <Component> <Content>"
 drain:
   depth: 4
   st: 0.4
@@ -23,7 +23,7 @@ anomaly_levels:
   - Error
   - Critical
 
-timestamp_column: Time
+timestamp_column: Datetime
 component_column: Component
 content_column: Content
 

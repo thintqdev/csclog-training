@@ -104,8 +104,11 @@ def build_embeddings(
     device = torch.device(device_str)
     datas = pd.read_csv(templates_csv)
 
-    tokenizer = AutoTokenizer.from_pretrained(bert_model_path)
-    bert = BertModel.from_pretrained(bert_model_path).to(device)
+    _bert_path = bert_model_path if Path(bert_model_path).is_dir() else "bert-base-uncased"
+    if _bert_path != bert_model_path:
+        print(f"  [embedder] Local BERT path not found: {bert_model_path!r}. Falling back to '{_bert_path}'.")
+    tokenizer = AutoTokenizer.from_pretrained(_bert_path)
+    bert = BertModel.from_pretrained(_bert_path).to(device)
 
     sentences: Dict[str, List[str]] = {
         row["EventId"]: _get_keys(row["EventTemplate"])
