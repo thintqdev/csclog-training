@@ -28,4 +28,3 @@ content_column: Content
 
 source_files:
   - openstack.log
-  - openstack_normal.log
