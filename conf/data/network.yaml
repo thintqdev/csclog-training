@@ -27,5 +27,5 @@ component_column: Component
 content_column: Content
 
 source_files:
-  - openstack_abnormal.log
+  - openstack.log
   - openstack_normal.log

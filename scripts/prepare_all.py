@@ -99,6 +99,10 @@ def main():
     parser.add_argument("--device", default="cpu", choices=["cpu", "cuda"])
     args = parser.parse_args()
 
+    bert_path = Path(args.bert)
+    if bert_path.exists():
+        args.bert = str(bert_path.resolve())
+
     for os_type in args.os:
         try:
             prepare_os(os_type, args.bert, args.device)

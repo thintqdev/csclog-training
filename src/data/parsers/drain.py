@@ -213,7 +213,8 @@ class LogParser:
                 except Exception:
                     pass
         logdf = pd.DataFrame(log_messages, columns=headers)
-        logdf.insert(0, "LineId", range(1, linecount + 1))
+        if "LineId" not in logdf.columns:
+            logdf.insert(0, "LineId", range(1, linecount + 1))
         return logdf
 
     def _generate_logformat_regex(self, logformat):
