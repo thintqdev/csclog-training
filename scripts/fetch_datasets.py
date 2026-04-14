@@ -17,7 +17,7 @@ BASE_RAW = "https://raw.githubusercontent.com/logpai/loghub/master"
 # (loghub_subfolder, filename, local_subfolder)
 DATASETS = {
     "linux": [
-        ("BGL", "BGL.log_2k.log", "BGL.log"),        # 2k sample renamed
+        ("BGL", "BGL_2k.log", "BGL.log"),
     ],
     "windows": [
         ("Windows", "Windows_2k.log", "Windows.log"),
@@ -26,8 +26,7 @@ DATASETS = {
         ("Mac", "Mac_2k.log", "Mac.log"),
     ],
     "network": [
-        ("OpenStack", "openstack_normal.log", "openstack_normal.log"),
-        ("OpenStack", "openstack_abnormal.log", "openstack_abnormal.log"),
+        ("OpenStack", "OpenStack_2k.log", "openstack.log"),
     ],
 }
 
