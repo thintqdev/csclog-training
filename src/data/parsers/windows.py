@@ -121,7 +121,14 @@ class WindowsParser(BaseParser):
         )
         parser.parse(fpath.name)
         structured = pd.read_csv(drain_out / (fpath.name + "_structured.csv"), na_filter=False)
-        structured["Label"] = structured[self.cfg.anomaly_label_column].isin(list(self.cfg.anomaly_levels)).astype(int)
+        strategy = getattr(self.cfg, "anomaly_label_strategy", "severity")
+        if strategy == "content_keywords":
+            keywords = list(self.cfg.anomaly_keywords)
+            structured["Label"] = structured[self.cfg.content_column].apply(
+                lambda c: int(any(kw in str(c) for kw in keywords))
+            )
+        else:
+            structured["Label"] = structured[self.cfg.anomaly_label_column].isin(list(self.cfg.anomaly_levels)).astype(int)
         structured["Timestamp"] = self._normalize_timestamp(structured[self.cfg.timestamp_column])
         return pd.DataFrame(
             {

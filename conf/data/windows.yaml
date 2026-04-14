@@ -17,11 +17,14 @@ drain:
     - "(?<=[^A-Za-z0-9])(\\-?\\+?\\d+)(?=[^A-Za-z0-9])|[0-9]+$"
     - "C:\\\\[\\w\\\\. \\-]+"
 
-anomaly_label_strategy: severity
-anomaly_label_column: Level
-anomaly_levels:
-  - Error
-  - Critical
+# CBS logs everything as Info; detect anomalies via content keywords instead
+anomaly_label_strategy: content_keywords
+anomaly_keywords:
+  - "Failed to create backup"
+  - "CBS_E_INVALID_PACKAGE"
+  - "CBS_E_MANIFEST_INVALID"
+  - "ERROR_INVALID_FUNCTION"
+  - "Failed to internally open package"
 
 timestamp_column: Datetime
 component_column: Component
