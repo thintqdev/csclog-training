@@ -1,0 +1,10 @@
+lr: 0.001
+weight_decay: 1.0e-4
+batch_size: 16
+num_epochs: 30
+patience: 10              # EarlyStopping patience (epochs without val F1 improvement)
+num_candidates: [1, 5]   # Top-K values to evaluate during training
+anomaly_rate: 1           # min misses per session to flag as anomaly
+checkpoint_dir: checkpoints
+val_every: 1              # validate every N epochs
+seed: 42

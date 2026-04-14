@@ -1,0 +1,20 @@
+variant: full   # full | wo_ic | no_shared | wo_lstm
+
+# FTEncoder
+sen_size: 768   # BERT hidden size (auto-detected from embeddings at runtime)
+ft_hid_size: 64
+alpha: 0.8
+ft_pattern: 1   # 0=cat+linear, 1=split, 2=add
+
+# LSTMEncoder
+lstm_hid_size: 64
+num_layers: 2
+
+# IREncoder
+mlp_hid_size: 64
+gcn_hid_size: 64
+
+# Classifier head
+out_hid_size: 64
+
+drop: 0.1

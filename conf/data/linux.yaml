@@ -1,0 +1,31 @@
+name: linux
+raw_dir: data/raw/linux
+sequences_dir: data/sequences/linux
+window_size: 9
+
+# Drain log parsing config for Linux BGL format
+# BGL columns: Label Timestamp Date Node Time NodeRepeat Type Component Level Content
+log_format: "<Label> <Timestamp> <Date> <Node> <Time> <NodeRepeat> <Type> <Component> <Level> <Content>"
+drain:
+  depth: 4
+  st: 0.4
+  max_child: 100
+  rex:
+    - "(?<=[^A-Za-z0-9])(\\-?\\+?\\d+)(?=[^A-Za-z0-9])|[0-9]+$"
+    - "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b"
+    - "(/[\\w.\\-]+)+"
+    - "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\b"
+
+# Label strategy: "column" uses a named column, "severity" uses level field
+anomaly_label_strategy: column
+anomaly_label_column: Label
+anomaly_normal_value: "-"
+
+# Timestamp column name in the parsed dataframe
+timestamp_column: Time
+component_column: Component
+content_column: Content
+
+# Dataset files (relative to raw_dir)
+source_files:
+  - BGL.log

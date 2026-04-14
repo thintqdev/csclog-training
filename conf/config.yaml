@@ -1,0 +1,11 @@
+defaults:
+  - data: linux
+  - model: csclog
+  - train: default
+  - _self_
+
+experiment_name: csclog-anomaly-detection
+run_name: "${data.name}-${model.variant}"
+
+# Path to BERT checkpoint (absolute or relative to where train.py is run)
+bert_model_path: ../CSCLog/model/bert

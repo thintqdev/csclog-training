@@ -1,0 +1,31 @@
+name: windows
+raw_dir: data/raw/windows
+sequences_dir: data/sequences/windows
+window_size: 9
+
+# Windows Loghub CSV — already structured, no header-strip regex needed
+log_format: "<LineId>,<Date>,<Time>,<Level>,<Component>,<EventId>,<EventTemplate>,<Content>"
+drain:
+  depth: 4
+  st: 0.4
+  max_child: 100
+  rex:
+    - "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b"
+    - "S-\\d-\\d+-(\\d+-){1,14}\\d+"
+    - "\\b[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\\b"
+    - "\\b0x[0-9a-fA-F]+\\b"
+    - "(?<=[^A-Za-z0-9])(\\-?\\+?\\d+)(?=[^A-Za-z0-9])|[0-9]+$"
+    - "C:\\\\[\\w\\\\. \\-]+"
+
+anomaly_label_strategy: severity
+anomaly_label_column: Level
+anomaly_levels:
+  - Error
+  - Critical
+
+timestamp_column: Time
+component_column: Component
+content_column: Content
+
+source_files:
+  - Windows.log

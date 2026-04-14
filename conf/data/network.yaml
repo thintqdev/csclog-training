@@ -1,0 +1,31 @@
+name: network
+raw_dir: data/raw/network
+sequences_dir: data/sequences/network
+window_size: 9
+
+# OpenStack logs: LogId Date Time Pid Level Component Content
+log_format: "<LogId> <Date> <Time> <Pid> <Level> <Component> <Content>"
+drain:
+  depth: 4
+  st: 0.4
+  max_child: 100
+  rex:
+    - "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(\\/(\\d{1,2}))?\\b"
+    - "\\b([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}\\b"
+    - "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\b"
+    - "(?<=[^A-Za-z0-9])(\\-?\\+?\\d+)(?=[^A-Za-z0-9])|[0-9]+$"
+
+anomaly_label_strategy: severity
+anomaly_label_column: Level
+anomaly_levels:
+  - ERROR
+  - CRITICAL
+  - WARNING
+
+timestamp_column: Time
+component_column: Component
+content_column: Content
+
+source_files:
+  - openstack_abnormal.log
+  - openstack_normal.log
